@@ -18,7 +18,7 @@
     .tab-content.active { display: block; animation: fadeIn 0.3s ease-in-out;}
     @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     
-    /* 底部導覽列 (改成三個按鈕) */
+    /* 底部導覽列 */
     .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); display: flex; justify-content: space-around; padding: 10px 0; z-index: 100; border-top-left-radius: 20px; border-top-right-radius: 20px; }
     .nav-btn { background: none; border: none; font-size: 0.9rem; color: #B0C4C1; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; width: 33%;}
     .nav-btn.active { color: var(--primary-color); }
@@ -35,57 +35,50 @@
     .cal-day.selected { background-color: var(--primary-color); color: white; font-weight: bold; }
     .cal-day.today { border: 2px dashed var(--primary-color); }
     
-    /* 食物迷你小標籤 */
     .food-tag { font-size: 0.55rem; background-color: #EBF4EE; color: #386662; border: 1px solid var(--secondary-color); border-radius: 4px; padding: 2px; margin-top: 2px; width: 90%; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .selected .food-tag { background-color: white; color: var(--primary-color); border: none; }
     .food-tag.new-food { background-color: #FFEEDD; color: #D48843; border-color: #FFDDAA; font-weight: bold; }
-    .selected .food-tag.new-food { background-color: #FFF; color: #D48843; }
 
     /* 表單區塊 */
     .record-section h3 { margin-top: 0; color: var(--primary-color); text-align: center; }
     .date-display { text-align: center; font-size: 1.2rem; margin-bottom: 15px; font-weight: bold; color: #5C4B43; }
-    
     .meal-block { background: #FCFCFA; border-radius: 15px; padding: 15px; margin-bottom: 15px; border: 1px dashed var(--wood-border); position: relative;}
     .meal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
     .btn-remove-meal { background: #FFE3E3; color: var(--danger-color); border: none; border-radius: 8px; padding: 4px 8px; font-size: 0.75rem; font-weight: bold; }
-    
     .input-group { margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
     select, input { border: 1px solid var(--wood-border); border-radius: 8px; padding: 8px; color: var(--text-color); flex-grow: 1; background-color: white;}
-    
     .btn { background-color: var(--primary-color); color: white; border: none; border-radius: 12px; padding: 10px 15px; font-weight: bold; cursor: pointer; width: 100%;}
     .btn-add-food { background-color: var(--secondary-color); color: #2C4A47; padding: 5px 10px; font-size: 0.8rem; border: none; border-radius: 8px; font-weight: bold; width: auto; margin-top: 5px;}
     .btn-action { background-color: transparent; border: none; font-size: 1.2rem; cursor: pointer; padding: 0;}
-    .btn-allergy { filter: grayscale(100%); opacity: 0.5; transition: 0.2s;}
+    .btn-allergy { filter: grayscale(100%); opacity: 0.3; transition: 0.2s;}
     .btn-allergy.active { filter: grayscale(0%); opacity: 1; }
     
-    /* 統計分頁樣式 */
+    /* 統計與 150 食物清單 */
     .stats-header { text-align: center; margin-bottom: 20px; }
     .progress-ring-container { position: relative; width: 150px; height: 150px; margin: 0 auto 10px; display: flex; justify-content: center; align-items: center; background: conic-gradient(var(--primary-color) 0%, #E0E0E0 0%); border-radius: 50%; }
     .progress-inner { width: 120px; height: 120px; background: white; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-    .progress-num { font-size: 2rem; font-weight: bold; color: var(--primary-color); }
+    .progress-num { font-size: 2.2rem; font-weight: bold; color: var(--primary-color); }
     
-    .stats-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .stat-item { background: #F8FBF8; border: 1px solid var(--secondary-color); border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem;}
-    .stat-item.allergy { border-color: var(--danger-color); background: #FFF3F3; }
-    
-    /* 指南分頁專屬卡片樣式 */
-    .guide-header { text-align: center; margin-bottom: 20px; color: var(--primary-color); border-bottom: 2px dashed var(--secondary-color); padding-bottom: 15px;}
-    .guide-card { background: var(--card-bg); border-radius: 15px; padding: 15px; margin-bottom: 15px; border-left: 5px solid var(--primary-color); box-shadow: 0 4px 6px rgba(0,0,0,0.03);}
-    .guide-card.danger { border-left-color: var(--danger-color); }
-    .guide-card h4 { margin: 0 0 10px 0; font-size: 1.05rem; display: flex; align-items: center; gap: 8px;}
-    .guide-card h4.danger-title { color: var(--danger-color); }
-    .guide-card ul { margin: 0; padding-left: 20px; font-size: 0.9rem; line-height: 1.6; color: #555;}
-    .guide-card li { margin-bottom: 6px; }
-    .stage-box { background: #F8FBF8; border-radius: 8px; padding: 10px; margin-bottom: 10px; font-size: 0.9rem; border: 1px solid #EBF4EE;}
-    .stage-title { font-weight: bold; color: var(--primary-color); margin-bottom: 5px; }
+    .food-category-title { background: var(--secondary-color); color: #2C4A47; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; font-weight: bold; margin: 20px 0 10px 0; display: inline-block;}
+    .checklist-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .check-item { background: white; border: 1px solid #EEE; border-radius: 8px; padding: 8px 4px; text-align: center; font-size: 0.75rem; color: #888; position: relative; overflow: hidden;}
+    .check-item.checked { background: #F0F7F4; border-color: var(--secondary-color); color: var(--primary-color); text-decoration: line-through; opacity: 0.7;}
+    .check-item.allergy { border-color: var(--danger-color); color: var(--danger-color); text-decoration: none; opacity: 1; font-weight: bold;}
+    .check-badge { font-size: 0.5rem; display: block; margin-top: 2px; color: var(--primary-color); text-decoration: none;}
 
-    /* 載入中遮罩 */
+    /* 指南卡片 */
+    .guide-card { background: white; border-radius: 15px; padding: 15px; margin-bottom: 15px; border-left: 5px solid var(--primary-color); box-shadow: 0 4px 6px rgba(0,0,0,0.03);}
+    .guide-card h4 { margin: 0 0 10px 0; font-size: 1rem; color: var(--primary-color); display: flex; align-items: center; gap: 8px;}
+    .guide-card ul { margin: 0; padding-left: 20px; font-size: 0.85rem; line-height: 1.6; color: #555;}
+    .stage-box { background: #F8FBF8; border-radius: 8px; padding: 10px; margin-bottom: 8px; font-size: 0.85rem; border: 1px solid #EBF4EE;}
+    .stage-title { font-weight: bold; color: var(--primary-color); margin-bottom: 3px; }
+
     #loading { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(244, 249, 244, 0.9); justify-content: center; align-items: center; font-size: 1.2rem; color: var(--primary-color); font-weight: bold; z-index: 1000; flex-direction: column; }
   </style>
 </head>
 <body>
 
-<div id="loading"><span>🌲 讀取木岑的資料中...</span></div>
+<div id="loading"><span>🌲 木岑探險中...</span></div>
 
 <div id="tab-diary" class="app-container tab-content active">
   <div class="cute-calendar">
@@ -99,12 +92,9 @@
     </div>
     <div class="cal-days" id="calDays"></div>
   </div>
-
   <div class="record-section">
     <h3>🪵 木岑的副食品紀錄 🌲</h3>
     <div class="date-display" id="displayDate"></div>
-    <div style="font-size: 0.8rem; color:#888; text-align:center; margin-bottom:10px;">可直接修改內容並儲存，將會覆蓋當日舊紀錄</div>
-    
     <div id="mealsContainer"></div>
     <button class="btn" style="background: transparent; border: 2px solid var(--primary-color); color: var(--primary-color); margin-bottom: 15px;" onclick="addMealBlock()">+ 新增一餐</button>
     <button class="btn" onclick="submitData()">儲存當日紀錄 🌿</button>
@@ -117,92 +107,82 @@
     <div class="progress-ring-container" id="progressRing">
       <div class="progress-inner">
         <div class="progress-num" id="progressNum">0</div>
-        <div style="font-size: 0.8rem; color: #888;">/ 100 種</div>
+        <div style="font-size: 0.8rem; color: #888;">已解鎖</div>
       </div>
     </div>
-    <p style="font-size:0.9rem; color:#666;">記錄包含吃過次數與過敏狀況</p>
+    <p style="font-size:0.85rem; color:#666;">系統會自動根據紀錄，劃掉已嘗試過的食材</p>
   </div>
-  <div class="stats-list" id="statsListContainer"></div>
+  
+  <div id="challengeList">
+    </div>
 </div>
 
-<div id="tab-guide" class="app-container tab-content" style="background: #FAFDFA;">
-  <div class="guide-header">
-    <h3 style="margin:0;">💡 媽咪副食品指南</h3>
-    <span style="font-size:0.8rem; color:#888;">參考 台灣兒科醫學會 最新建議</span>
-  </div>
-
+<div id="tab-guide" class="app-container tab-content">
+  <h3 style="text-align:center; color: var(--primary-color);">💡 森林副食品學堂</h3>
   <div class="guide-card">
-    <h4 style="color: var(--primary-color);">🌱 餵食大原則</h4>
+    <h4>🌱 少量多樣化 (黃瑽寧醫師建議)</h4>
     <ul>
-      <li><b>開始時機：</b>4~6 個月即可開始，以少量 (1-2茶匙) 嘗試。</li>
-      <li><b>不要怕過敏：</b>最新觀念指出，<b>高致敏食物 (如雞蛋泥、花生醬、海鮮泥) 毋須刻意延後</b>，及早少量接觸反而能訓練寶寶耐受性！</li>
-      <li><b>循序漸進：</b>一次只給一種「新」食物，餵食 3~5 天觀察有無紅疹或腹瀉，沒問題再加下一種。</li>
-      <li><b>奶量分配：</b>一歲前「奶」仍是主食，副食品是練習吞嚥與探索味道。避免強迫餵食，保持寶寶吃飯好心情！</li>
+      <li><b>不必一種試三天：</b>每天給一點點、很多種不同的新食物，更能訓練免疫耐受性。</li>
+      <li><b>大人吃什麼，寶寶跟著吃：</b>挑出天然食材，剪碎或打糊，不加鹽糖即可。</li>
+      <li><b>及早接觸過敏原：</b>雞蛋、花生、海鮮等高致敏物應及早微量嘗試，不需延後。</li>
     </ul>
   </div>
-
   <div class="guide-card">
-    <h4 style="color: var(--primary-color);">🥣 質地進階表</h4>
+    <h4>🥦 手指食物 (Finger Food)</h4>
     <div class="stage-box">
-      <div class="stage-title">💧 4~6 個月：泥狀、糊狀</div>
-      十倍粥、水煮菜泥、地瓜泥。以能輕易從湯匙流下的糊狀為主，練習舌頭前後吞嚥。
+      <div class="stage-title">6~8m：整把抓階段</div>
+      給予<b>「粗長條狀」</b>（如食指大小），質地需能用手指輕易捏扁。
     </div>
     <div class="stage-box">
-      <div class="stage-title">🥣 7~9 個月：半固體、軟爛狀</div>
-      七倍粥、蒸蛋、豆腐、壓爛的香蕉。質地如「嘴唇一抿就化開」，寶寶開始練習用牙齦壓碎食物。
-    </div>
-    <div class="stage-box">
-      <div class="stage-title">🥦 10~12 個月：塊狀、軟固體</div>
-      五倍粥、肉末、煮軟的紅蘿蔔條、手指食物。讓寶寶練習自己抓握，咀嚼能力大躍進！
+      <div class="stage-title">9~12m：精細捏階段</div>
+      練習用大拇指與食指「捏」，可給予<b>「骰子狀」</b>小塊食物。
     </div>
   </div>
-
-  <div class="guide-card danger">
-    <h4 class="danger-title">⚠️ 一歲前絕對 NG 清單</h4>
+  <div class="guide-card" style="border-left-color: var(--danger-color);">
+    <h4 style="color: var(--danger-color);">❌ 一歲前絕對禁止</h4>
     <ul>
-      <li><b>❌ 蜂蜜：</b>可能含有肉毒桿菌芽孢，嬰兒腸胃尚未發育完全，絕對禁止！</li>
-      <li><b>❌ 鹽巴、糖、醬油：</b>嬰兒腎臟功能未完全，副食品請以天然原味為主，不需任何調味料。</li>
-      <li><b>❌ 圓形硬物 (防噎)：</b>整顆葡萄、堅果、熱狗、湯圓、果凍，極易發生窒息危險。</li>
-      <li><b>❌ 果汁：</b>兒科醫學會強烈建議一歲前不要給果汁，直接吃果泥能攝取更多纖維且不養成嗜甜習慣。</li>
-      <li><b>❌ 鮮奶：</b>全脂牛奶蛋白質與礦物質過高，一歲前以母乳或配方奶為主，但可少量入菜 (如蒸蛋)。</li>
+      <li><b>蜂蜜：</b>極危險，恐導致肉毒桿菌中毒。</li>
+      <li><b>鹽巴糖調味料：</b>保護腎臟發育。</li>
+      <li><b>圓形硬物：</b>整顆堅果、葡萄、湯圓（窒息風險）。</li>
+      <li><b>鮮奶當主食：</b>一歲前奶量仍由母乳或配方奶主導。</li>
     </ul>
   </div>
 </div>
 
 <div class="bottom-nav">
-  <button class="nav-btn active" id="nav-diary" onclick="switchTab('diary')">
-    <span class="nav-icon">📖</span><span>日記</span>
-  </button>
-  <button class="nav-btn" id="nav-stats" onclick="switchTab('stats')">
-    <span class="nav-icon">📊</span><span>百大挑戰</span>
-  </button>
-  <button class="nav-btn" id="nav-guide" onclick="switchTab('guide')">
-    <span class="nav-icon">💡</span><span>媽咪指南</span>
-  </button>
+  <button class="nav-btn active" id="nav-diary" onclick="switchTab('diary')"><span class="nav-icon">📖</span>日記</button>
+  <button class="nav-btn" id="nav-stats" onclick="switchTab('stats')"><span class="nav-icon">📊</span>百大挑戰</button>
+  <button class="nav-btn" id="nav-guide" onclick="switchTab('guide')"><span class="nav-icon">💡</span>指南</button>
 </div>
 
 <script>
-  // GAS 網址
   const GAS_URL = "https://script.google.com/macros/s/AKfycbwYMNAkHPIV4WpdxoHngCHnUFSO3l8wDM_eFplbKGFzABKW74lMSqeKCLW16a80_Fgo/exec"; 
+
+  // 150 種精選食材清單
+  const MASTER_FOOD_LIST = {
+    "澱粉類": ["十倍粥", "燕麥", "地瓜", "馬鈴薯", "南瓜", "山藥", "糙米", "紫米", "小米", "藜麥", "紅豆", "綠豆", "薏仁", "土司", "麵條", "通心粉", "冬粉", "麵線", "蓮藕", "菱角", "栗子", "玉米"],
+    "蔬菜類": ["高麗菜", "青江菜", "小白菜", "菠菜", "地瓜葉", "空心菜", "莧菜", "大白菜", "油菜", "紅蘿蔔", "白蘿蔔", "青花菜", "白花菜", "洋蔥", "甜椒", "番茄", "茄子", "絲瓜", "冬瓜", "大黃瓜", "小黃瓜", "苦瓜", "秋葵", "四季豆", "豌豆", "毛豆", "蘆筍", "玉米筍", "甜菜根", "木耳", "香菇", "金針菇", "杏鮑菇", "蘑菇"],
+    "蛋白質": ["雞蛋黃", "全蛋", "雞胸肉", "雞腿肉", "豬肉", "牛肉", "鱈魚", "鮭魚", "鯛魚", "鱸魚", "吻仔魚", "魩仔魚", "蝦子", "蛤蜊", "干貝", "豆腐", "豆干", "豆包", "豆漿", "毛豆", "雞肝", "豬肝"],
+    "水果類": ["蘋果", "香蕉", "梨子", "木瓜", "酪梨", "葡萄", "藍莓", "草莓", "奇異果", "芒果", "火龍果", "西瓜", "哈密瓜", "蓮霧", "芭樂", "柑橘", "柳丁", "櫻桃", "鳳梨", "水蜜桃", "棗子", "柿子", "枇杷", "覆盆子"],
+    "辛香料/其他": ["薑", "蒜", "蔥", "香菜", "九層塔", "芹菜", "黑芝麻", "白芝麻", "無糖優格", "起司", "橄欖油", "亞麻仁油", "酪梨油", "核桃", "腰果", "杏仁", "花生醬", "紅棗", "枸杞"]
+  };
 
   let currentDate = new Date();
   let selectedDate = new Date();
   let foodRecords = {}; 
   let foodStats = {}; 
-  let currentDayMealsData = []; 
+  let currentDayMealsData = [];
 
   async function fetchHistoryData() {
     try {
       const response = await fetch(GAS_URL + "?t=" + new Date().getTime());
-      const data = await response.json();
-      foodRecords = data;
+      foodRecords = await response.json();
       calculateStats();
     } catch (error) { console.log("讀取失敗"); }
-    
     document.getElementById('loading').style.display = 'none';
     renderCalendar();
     selectDate(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
-    renderStats();
+    renderChallengeList();
   }
 
   function calculateStats() {
@@ -212,29 +192,40 @@
         meal.foods.forEach(food => {
           let fName = food.name.trim();
           if(!fName) return;
+          
           if (!foodStats[fName]) {
-            foodStats[fName] = { count: 0, firstDate: date, allergy: false };
+            // 初始化食物統計，並記錄第一次與最後一次的日期
+            foodStats[fName] = { count: 0, firstDate: date, lastDate: date, allergy: food.allergy };
           }
           foodStats[fName].count++;
+          
+          // 比較最早體驗日
           if (new Date(date) < new Date(foodStats[fName].firstDate)) {
             foodStats[fName].firstDate = date;
           }
-          if (food.allergy) foodStats[fName].allergy = true;
+          
+          // 關鍵更新：以「最新的一次紀錄」來決定是否還有過敏
+          if (new Date(date) > new Date(foodStats[fName].lastDate)) {
+            foodStats[fName].lastDate = date;
+            foodStats[fName].allergy = food.allergy; // 用最新狀態覆蓋
+          } else if (date === foodStats[fName].lastDate) {
+            // 如果是同一天吃好幾次，只要有一次過敏就算過敏
+            if (food.allergy) foodStats[fName].allergy = true;
+          }
         });
       });
     }
   }
 
-  // === 切換分頁邏輯 ===
   function switchTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
     document.getElementById('tab-' + tabId).classList.add('active');
     document.getElementById('nav-' + tabId).classList.add('active');
-    if(tabId === 'stats') renderStats();
+    if(tabId === 'stats') renderChallengeList();
   }
 
-  // === 月曆渲染邏輯 ===
+  // 月曆邏輯 (同步更新新食物標籤)
   function renderCalendar() {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
@@ -243,39 +234,24 @@
     const lastDay = new Date(year, month + 1, 0).getDate();
     const calDays = document.getElementById('calDays');
     calDays.innerHTML = '';
-    
-    for (let i = 0; i < firstDayIndex; i++) { calDays.innerHTML += `<div></div>`; }
-    
+    for (let i = 0; i < firstDayIndex; i++) calDays.innerHTML += `<div></div>`;
     for (let i = 1; i <= lastDay; i++) {
-      let isToday = (i === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear()) ? 'today' : '';
-      let isSelected = (i === selectedDate.getDate() && month === selectedDate.getMonth() && year === selectedDate.getFullYear()) ? 'selected' : '';
-      
       let dateKey = `${year}-${(month + 1).toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}`;
       let foodTagsHTML = '';
-      
       if (foodRecords[dateKey]) {
-        let uniqueFoods = [];
-        let seen = new Set();
+        let uniqueFoods = []; let seen = new Set();
         foodRecords[dateKey].forEach(m => m.foods.forEach(f => {
           if(!seen.has(f.name) && f.name.trim() !== "") { seen.add(f.name); uniqueFoods.push(f.name); }
         }));
-        
-        uniqueFoods.sort((a, b) => {
-          let aIsNew = foodStats[a].firstDate === dateKey ? 1 : 0;
-          let bIsNew = foodStats[b].firstDate === dateKey ? 1 : 0;
-          return bIsNew - aIsNew; 
-        });
-        
-        let foodsToDisplay = uniqueFoods.slice(0, 2); 
-        foodsToDisplay.forEach(fName => {
-          let isNewFood = foodStats[fName].firstDate === dateKey;
-          let markNew = isNewFood ? ' new-food' : ''; 
-          let prefix = isNewFood ? '✨' : '';
-          foodTagsHTML += `<div class="food-tag${markNew}">${prefix}${fName}</div>`;
+        uniqueFoods.sort((a,b) => (foodStats[b].firstDate === dateKey ? 1 : 0) - (foodStats[a].firstDate === dateKey ? 1 : 0));
+        uniqueFoods.slice(0, 2).forEach(fName => {
+          let mark = foodStats[fName].firstDate === dateKey ? ' new-food' : '';
+          foodTagsHTML += `<div class="food-tag${mark}">${fName}</div>`;
         });
         if (uniqueFoods.length > 2) foodTagsHTML += `<div class="food-tag">...</div>`;
       }
-
+      let isToday = (i === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear()) ? 'today' : '';
+      let isSelected = (i === selectedDate.getDate() && month === selectedDate.getMonth() && year === selectedDate.getFullYear()) ? 'selected' : '';
       const dayDiv = document.createElement('div');
       dayDiv.className = `cal-day ${isToday} ${isSelected}`;
       dayDiv.innerHTML = `<span>${i}</span>${foodTagsHTML}`;
@@ -284,156 +260,80 @@
     }
   }
 
-  function changeMonth(step) {
-    currentDate.setMonth(currentDate.getMonth() + step);
-    renderCalendar();
-  }
+  function changeMonth(step) { currentDate.setMonth(currentDate.getMonth() + step); renderCalendar(); }
 
-  // === 編輯當日紀錄邏輯 ===
   function selectDate(year, month, day) {
     selectedDate = new Date(year, month, day);
     renderCalendar();
-    
     let dateKey = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
     document.getElementById('displayDate').innerText = `【 ${dateKey} 】`;
-
-    currentDayMealsData = [];
-    if (foodRecords[dateKey]) {
-      currentDayMealsData = JSON.parse(JSON.stringify(foodRecords[dateKey]));
-    }
-    
-    if(currentDayMealsData.length === 0) {
-       currentDayMealsData.push({ time: "12:00", foods: [{ name: "", allergy: false }] });
-    }
+    currentDayMealsData = foodRecords[dateKey] ? JSON.parse(JSON.stringify(foodRecords[dateKey])) : [{ time: "12:00", foods: [{ name: "", allergy: false }] }];
     renderMealsEditor();
-  }
-
-  function generateTimeOptions(selectedTime) {
-    let options = '';
-    for (let h = 8; h <= 21; h++) {
-      let hStr = h.toString().padStart(2, '0');
-      let t1 = `${hStr}:00`; let t2 = `${hStr}:30`;
-      options += `<option value="${t1}" ${selectedTime==t1?'selected':''}>${t1}</option>`;
-      options += `<option value="${t2}" ${selectedTime==t2?'selected':''}>${t2}</option>`;
-    }
-    return options;
   }
 
   function renderMealsEditor() {
     const container = document.getElementById('mealsContainer');
     container.innerHTML = '';
-    
-    currentDayMealsData.forEach((meal, mealIndex) => {
-      let mealDiv = document.createElement('div');
-      mealDiv.className = 'meal-block';
-      
+    currentDayMealsData.forEach((meal, mIdx) => {
       let foodsHTML = '';
-      meal.foods.forEach((food, foodIndex) => {
-        let allergyActive = food.allergy ? 'active' : '';
-        foodsHTML += `
-          <div class="input-group">
-            <input type="text" placeholder="食物名稱" value="${food.name}" onchange="updateFood(${mealIndex}, ${foodIndex}, 'name', this.value)">
-            <button class="btn-action btn-allergy ${allergyActive}" onclick="toggleAllergy(${mealIndex}, ${foodIndex})" title="標記過敏">⚠️</button>
-            <button class="btn-action" onclick="removeFood(${mealIndex}, ${foodIndex})" style="color:#D9534F;" title="刪除此項">✖</button>
-          </div>
-        `;
+      meal.foods.forEach((food, fIdx) => {
+        let active = food.allergy ? 'active' : '';
+        foodsHTML += `<div class="input-group">
+          <input type="text" value="${food.name}" onchange="currentDayMealsData[${mIdx}].foods[${fIdx}].name=this.value">
+          <button class="btn-action btn-allergy ${active}" onclick="currentDayMealsData[${mIdx}].foods[${fIdx}].allergy=!currentDayMealsData[${mIdx}].foods[${fIdx}].allergy;renderMealsEditor()">⚠️</button>
+          <button class="btn-action" onclick="currentDayMealsData[${mIdx}].foods.splice(${fIdx},1);renderMealsEditor()">✖</button>
+        </div>`;
       });
-
-      mealDiv.innerHTML = `
-        <div class="meal-header">
-          <select onchange="updateTime(${mealIndex}, this.value)">${generateTimeOptions(meal.time)}</select>
-          <button class="btn-remove-meal" onclick="removeMealBlock(${mealIndex})">刪除此餐</button>
-        </div>
-        <div>${foodsHTML}</div>
-        <button class="btn-add-food" onclick="addFoodField(${mealIndex})">+ 新增食物</button>
-      `;
-      container.appendChild(mealDiv);
+      let div = document.createElement('div'); div.className = 'meal-block';
+      div.innerHTML = `<div class="meal-header">
+        <select onchange="currentDayMealsData[${mIdx}].time=this.value">${generateTimeOptions(meal.time)}</select>
+        <button class="btn-remove-meal" onclick="currentDayMealsData.splice(${mIdx},1);renderMealsEditor()">刪除</button>
+      </div>${foodsHTML}<button class="btn-add-food" onclick="currentDayMealsData[${mIdx}].foods.push({name:'',allergy:false});renderMealsEditor()">+ 新增食物</button>`;
+      container.appendChild(div);
     });
   }
 
-  function updateTime(mIdx, val) { currentDayMealsData[mIdx].time = val; }
-  function updateFood(mIdx, fIdx, key, val) { currentDayMealsData[mIdx].foods[fIdx][key] = val; }
-  function toggleAllergy(mIdx, fIdx) { 
-    currentDayMealsData[mIdx].foods[fIdx].allergy = !currentDayMealsData[mIdx].foods[fIdx].allergy; 
-    renderMealsEditor(); 
+  function generateTimeOptions(sel) {
+    let opt = ''; for (let h=8;h<=21;h++) {
+      ['00','30'].forEach(m => { let t=`${h.toString().padStart(2,'0')}:${m}`; opt+=`<option value="${t}" ${sel==t?'selected':''}>${t}</option>`; });
+    } return opt;
   }
-  function addFoodField(mIdx) { 
-    currentDayMealsData[mIdx].foods.push({name: "", allergy: false}); 
-    renderMealsEditor(); 
-  }
-  function removeFood(mIdx, fIdx) { 
-    currentDayMealsData[mIdx].foods.splice(fIdx, 1); 
-    renderMealsEditor(); 
-  }
-  function addMealBlock() { 
-    currentDayMealsData.push({ time: "12:00", foods: [{ name: "", allergy: false }] }); 
-    renderMealsEditor(); 
-  }
-  function removeMealBlock(mIdx) { 
-    currentDayMealsData.splice(mIdx, 1); 
-    renderMealsEditor(); 
-  }
+
+  function addMealBlock() { currentDayMealsData.push({time:"12:00",foods:[{name:"",allergy:false}]}); renderMealsEditor(); }
 
   function submitData() {
     const dateText = document.getElementById('displayDate').innerText.replace('【 ', '').replace(' 】', '');
-    
-    let cleanMeals = [];
-    currentDayMealsData.forEach(meal => {
-       let validFoods = meal.foods.filter(f => f.name.trim() !== "");
-       if(validFoods.length > 0) cleanMeals.push({ time: meal.time, foods: validFoods });
-    });
-
-    if(cleanMeals.length === 0) {
-       alert("最少要留一項食物紀錄喔！若要清空請直接在 Google 表單刪除該列。"); return;
-    }
-
+    let clean = currentDayMealsData.map(m => ({ time: m.time, foods: m.foods.filter(f => f.name.trim() !== "") })).filter(m => m.foods.length > 0);
+    if(clean.length === 0) { alert("請填寫食材"); return; }
     document.getElementById('loading').style.display = 'flex';
-
-    fetch(GAS_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ date: dateText, meals: cleanMeals })
-    })
-    .then(r => r.json())
-    .then(data => {
-      if(data.status === "success") {
-        alert("當日紀錄已更新！子淇媽咪辛苦了 🥰");
-        fetchHistoryData(); 
-      } else { alert("儲存失敗：" + data.message); document.getElementById('loading').style.display='none'; }
-    }).catch(err => { alert("錯誤：" + err); document.getElementById('loading').style.display='none'; });
+    fetch(GAS_URL, { method: 'POST', body: JSON.stringify({ date: dateText, meals: clean }) })
+    .then(r => r.json()).then(data => { if(data.status==="success") { alert("儲存成功！"); fetchHistoryData(); }});
   }
 
-  function renderStats() {
-    let foodNames = Object.keys(foodStats);
-    let totalKinds = foodNames.length;
-    
-    let percent = Math.min((totalKinds / 100) * 100, 100);
-    document.getElementById('progressRing').style.background = `conic-gradient(var(--primary-color) ${percent}%, #E0E0E0 0%)`;
-    document.getElementById('progressNum').innerText = totalKinds;
+  // 渲染 150 種挑戰清單 (願望解鎖)
+  function renderChallengeList() {
+    const container = document.getElementById('challengeList');
+    container.innerHTML = '';
+    let totalUnlocked = Object.keys(foodStats).length;
+    document.getElementById('progressNum').innerText = totalUnlocked;
+    document.getElementById('progressRing').style.background = `conic-gradient(var(--primary-color) ${Math.min(totalUnlocked, 100)}%, #E0E0E0 0%)`;
 
-    foodNames.sort((a, b) => foodStats[b].count - foodStats[a].count);
-
-    let listContainer = document.getElementById('statsListContainer');
-    listContainer.innerHTML = '';
-    
-    foodNames.forEach(fName => {
-      let stat = foodStats[fName];
-      let allergyMark = stat.allergy ? '<span style="color:var(--danger-color)">⚠️過敏</span>' : '';
-      let isAllergyClass = stat.allergy ? 'allergy' : '';
+    for (let cat in MASTER_FOOD_LIST) {
+      let catDiv = document.createElement('div');
+      catDiv.innerHTML = `<div class="food-category-title">${cat}</div>`;
+      let grid = document.createElement('div'); grid.className = 'checklist-grid';
       
-      listContainer.innerHTML += `
-        <div class="stat-item ${isAllergyClass}">
-          <div>
-            <div style="font-weight:bold;">${fName}</div>
-            <div style="font-size:0.75rem; color:#888;">吃過 ${stat.count} 次</div>
-          </div>
-          <div>${allergyMark}</div>
-        </div>
-      `;
-    });
-    
-    if(totalKinds === 0) {
-      listContainer.innerHTML = `<div style="grid-column: span 2; text-align:center; color:#999; margin-top:20px;">還沒有紀錄唷，趕快開始挑戰吧！</div>`;
+      MASTER_FOOD_LIST[cat].forEach(fName => {
+        let stat = foodStats[fName];
+        let checked = stat ? 'checked' : '';
+        let allergy = (stat && stat.allergy) ? 'allergy' : '';
+        let badge = stat ? `<span class="check-badge">✅ 已挑戰</span>` : '';
+        if(stat && stat.allergy) badge = `<span class="check-badge">⚠️ 過敏</span>`;
+        
+        grid.innerHTML += `<div class="check-item ${checked} ${allergy}">${fName}${badge}</div>`;
+      });
+      catDiv.appendChild(grid);
+      container.appendChild(catDiv);
     }
   }
 
