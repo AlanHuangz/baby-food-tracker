@@ -18,7 +18,7 @@
     .tab-content.active { display: block; animation: fadeIn 0.3s ease-in-out;}
     @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     
-    /* 底部導覽列 (四個按鈕) */
+    /* 底部導覽列 */
     .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); display: flex; justify-content: space-around; padding: 10px 0; z-index: 100; border-top-left-radius: 20px; border-top-right-radius: 20px; }
     .nav-btn { background: none; border: none; font-size: 0.85rem; color: #B0C4C1; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; width: 25%;}
     .nav-btn.active { color: var(--primary-color); }
@@ -152,10 +152,10 @@
     "辛香料/其他": ["薑", "蒜", "蔥", "香菜", "九層塔", "芹菜", "黑芝麻", "白芝麻", "無糖優格", "起司", "橄欖油", "亞麻仁油", "酪梨油", "核桃", "腰果", "杏仁", "花生醬", "紅棗", "枸杞"]
   };
 
-  let currentDate = new Date(); // 日記分頁顯示的月份
+  let currentDate = new Date(); 
   let foodRecords = {}; 
   let foodStats = {}; 
-  let currentEditingMeals = []; // 記錄分頁當前編輯的資料
+  let currentEditingMeals = []; 
 
   async function fetchAllData() {
     try {
@@ -225,6 +225,13 @@
     document.getElementById('monthYear').innerText = `${y}年 ${m + 1}月`;
     const first = new Date(y, m, 1).getDay(), last = new Date(y, m+1, 0).getDate();
     const container = document.getElementById('calDays'); container.innerHTML = '';
+    
+    // 取得真正的本地日期以判斷「今天」
+    const dNow = new Date();
+    const todayYear = dNow.getFullYear();
+    const todayMonth = dNow.getMonth();
+    const todayDate = dNow.getDate();
+
     for(let i=0; i<first; i++) container.innerHTML += '<div></div>';
     for(let i=1; i<=last; i++) {
       let dKey = `${y}-${(m+1).toString().padStart(2,'0')}-${i.toString().padStart(2,'0')}`;
@@ -241,8 +248,10 @@
         });
         if(fs.length>3) tags += `<div style="font-size:0.5rem; color:#999;">...</div>`;
       }
+      
+      let isToday = (i === todayDate && m === todayMonth && y === todayYear) ? 'today' : '';
       let dayDiv = document.createElement('div');
-      dayDiv.className = `cal-day ${foodRecords[dKey]?'has-data':''} ${(i===new Date().getDate() && m===new Date().getMonth())?'today':''}`;
+      dayDiv.className = `cal-day ${foodRecords[dKey]?'has-data':''} ${isToday}`;
       dayDiv.innerHTML = `<b>${i}</b>${tags}`;
       dayDiv.onclick = () => { document.getElementById('inputDate').value = dKey; loadDateRecord(dKey); switchTab('record'); };
       container.appendChild(dayDiv);
@@ -276,9 +285,14 @@
   }
 
   window.onload = () => {
-    let today = new Date().toISOString().split('T')[0];
-    document.getElementById('inputDate').value = today;
-    loadDateRecord(today);
+    // 取得真正的本地今天日期 YYYY-MM-DD
+    const d = new Date();
+    const localToday = d.getFullYear() + '-' + 
+                       (d.getMonth() + 1).toString().padStart(2, '0') + '-' + 
+                       d.getDate().toString().padStart(2, '0');
+                       
+    document.getElementById('inputDate').value = localToday;
+    loadDateRecord(localToday);
     fetchAllData();
   };
 </script>
