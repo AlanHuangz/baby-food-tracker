@@ -8,18 +8,21 @@
     :root {
       --bg-color: #F4F9F4; --primary-color: #5C8D89; --secondary-color: #A7D7C5; 
       --text-color: #4A4A4A; --wood-border: #D5C2A5; --danger-color: #E07A5F;
+      --card-bg: #FFFFFF;
     }
-    body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 10px; padding-bottom: 70px; display: flex; flex-direction: column; align-items: center; }
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 10px; padding-bottom: 75px; display: flex; flex-direction: column; align-items: center; }
     .app-container { width: 100%; max-width: 420px; background: white; border-radius: 25px; box-shadow: 0 10px 20px rgba(92, 141, 137, 0.15); padding: 20px; box-sizing: border-box; }
     
     /* 頁籤切換 */
     .tab-content { display: none; }
-    .tab-content.active { display: block; }
+    .tab-content.active { display: block; animation: fadeIn 0.3s ease-in-out;}
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     
-    /* 底部導覽列 */
+    /* 底部導覽列 (改成三個按鈕) */
     .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); display: flex; justify-content: space-around; padding: 10px 0; z-index: 100; border-top-left-radius: 20px; border-top-right-radius: 20px; }
-    .nav-btn { background: none; border: none; font-size: 1rem; color: #999; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .nav-btn { background: none; border: none; font-size: 0.9rem; color: #B0C4C1; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; width: 33%;}
     .nav-btn.active { color: var(--primary-color); }
+    .nav-icon { font-size: 1.3rem; }
     
     /* 月曆區塊 */
     .cute-calendar { background-color: white; border-radius: 20px; padding: 15px; margin-bottom: 20px; border: 2px solid var(--secondary-color); }
@@ -65,6 +68,17 @@
     .stat-item { background: #F8FBF8; border: 1px solid var(--secondary-color); border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem;}
     .stat-item.allergy { border-color: var(--danger-color); background: #FFF3F3; }
     
+    /* 指南分頁專屬卡片樣式 */
+    .guide-header { text-align: center; margin-bottom: 20px; color: var(--primary-color); border-bottom: 2px dashed var(--secondary-color); padding-bottom: 15px;}
+    .guide-card { background: var(--card-bg); border-radius: 15px; padding: 15px; margin-bottom: 15px; border-left: 5px solid var(--primary-color); box-shadow: 0 4px 6px rgba(0,0,0,0.03);}
+    .guide-card.danger { border-left-color: var(--danger-color); }
+    .guide-card h4 { margin: 0 0 10px 0; font-size: 1.05rem; display: flex; align-items: center; gap: 8px;}
+    .guide-card h4.danger-title { color: var(--danger-color); }
+    .guide-card ul { margin: 0; padding-left: 20px; font-size: 0.9rem; line-height: 1.6; color: #555;}
+    .guide-card li { margin-bottom: 6px; }
+    .stage-box { background: #F8FBF8; border-radius: 8px; padding: 10px; margin-bottom: 10px; font-size: 0.9rem; border: 1px solid #EBF4EE;}
+    .stage-title { font-weight: bold; color: var(--primary-color); margin-bottom: 5px; }
+
     /* 載入中遮罩 */
     #loading { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(244, 249, 244, 0.9); justify-content: center; align-items: center; font-size: 1.2rem; color: var(--primary-color); font-weight: bold; z-index: 1000; flex-direction: column; }
   </style>
@@ -111,20 +125,70 @@
   <div class="stats-list" id="statsListContainer"></div>
 </div>
 
+<div id="tab-guide" class="app-container tab-content" style="background: #FAFDFA;">
+  <div class="guide-header">
+    <h3 style="margin:0;">💡 媽咪副食品指南</h3>
+    <span style="font-size:0.8rem; color:#888;">參考 台灣兒科醫學會 最新建議</span>
+  </div>
+
+  <div class="guide-card">
+    <h4 style="color: var(--primary-color);">🌱 餵食大原則</h4>
+    <ul>
+      <li><b>開始時機：</b>4~6 個月即可開始，以少量 (1-2茶匙) 嘗試。</li>
+      <li><b>不要怕過敏：</b>最新觀念指出，<b>高致敏食物 (如雞蛋泥、花生醬、海鮮泥) 毋須刻意延後</b>，及早少量接觸反而能訓練寶寶耐受性！</li>
+      <li><b>循序漸進：</b>一次只給一種「新」食物，餵食 3~5 天觀察有無紅疹或腹瀉，沒問題再加下一種。</li>
+      <li><b>奶量分配：</b>一歲前「奶」仍是主食，副食品是練習吞嚥與探索味道。避免強迫餵食，保持寶寶吃飯好心情！</li>
+    </ul>
+  </div>
+
+  <div class="guide-card">
+    <h4 style="color: var(--primary-color);">🥣 質地進階表</h4>
+    <div class="stage-box">
+      <div class="stage-title">💧 4~6 個月：泥狀、糊狀</div>
+      十倍粥、水煮菜泥、地瓜泥。以能輕易從湯匙流下的糊狀為主，練習舌頭前後吞嚥。
+    </div>
+    <div class="stage-box">
+      <div class="stage-title">🥣 7~9 個月：半固體、軟爛狀</div>
+      七倍粥、蒸蛋、豆腐、壓爛的香蕉。質地如「嘴唇一抿就化開」，寶寶開始練習用牙齦壓碎食物。
+    </div>
+    <div class="stage-box">
+      <div class="stage-title">🥦 10~12 個月：塊狀、軟固體</div>
+      五倍粥、肉末、煮軟的紅蘿蔔條、手指食物。讓寶寶練習自己抓握，咀嚼能力大躍進！
+    </div>
+  </div>
+
+  <div class="guide-card danger">
+    <h4 class="danger-title">⚠️ 一歲前絕對 NG 清單</h4>
+    <ul>
+      <li><b>❌ 蜂蜜：</b>可能含有肉毒桿菌芽孢，嬰兒腸胃尚未發育完全，絕對禁止！</li>
+      <li><b>❌ 鹽巴、糖、醬油：</b>嬰兒腎臟功能未完全，副食品請以天然原味為主，不需任何調味料。</li>
+      <li><b>❌ 圓形硬物 (防噎)：</b>整顆葡萄、堅果、熱狗、湯圓、果凍，極易發生窒息危險。</li>
+      <li><b>❌ 果汁：</b>兒科醫學會強烈建議一歲前不要給果汁，直接吃果泥能攝取更多纖維且不養成嗜甜習慣。</li>
+      <li><b>❌ 鮮奶：</b>全脂牛奶蛋白質與礦物質過高，一歲前以母乳或配方奶為主，但可少量入菜 (如蒸蛋)。</li>
+    </ul>
+  </div>
+</div>
+
 <div class="bottom-nav">
-  <button class="nav-btn active" id="nav-diary" onclick="switchTab('diary')"><span>📖</span>日記</button>
-  <button class="nav-btn" id="nav-stats" onclick="switchTab('stats')"><span>📊</span>百種挑戰</button>
+  <button class="nav-btn active" id="nav-diary" onclick="switchTab('diary')">
+    <span class="nav-icon">📖</span><span>日記</span>
+  </button>
+  <button class="nav-btn" id="nav-stats" onclick="switchTab('stats')">
+    <span class="nav-icon">📊</span><span>百大挑戰</span>
+  </button>
+  <button class="nav-btn" id="nav-guide" onclick="switchTab('guide')">
+    <span class="nav-icon">💡</span><span>媽咪指南</span>
+  </button>
 </div>
 
 <script>
+  // GAS 網址
   const GAS_URL = "https://script.google.com/macros/s/AKfycbwYMNAkHPIV4WpdxoHngCHnUFSO3l8wDM_eFplbKGFzABKW74lMSqeKCLW16a80_Fgo/exec"; 
 
   let currentDate = new Date();
   let selectedDate = new Date();
   let foodRecords = {}; 
-  let foodStats = {}; // 統計每種食物的資訊 { "地瓜": { count: 3, firstDate: "2026-04-03", allergy: false } }
-  
-  // 記錄當下畫面上編輯的這天所有的餐點，方便整天存檔
+  let foodStats = {}; 
   let currentDayMealsData = []; 
 
   async function fetchHistoryData() {
@@ -132,7 +196,7 @@
       const response = await fetch(GAS_URL + "?t=" + new Date().getTime());
       const data = await response.json();
       foodRecords = data;
-      calculateStats(); // 計算統計與初次體驗日
+      calculateStats();
     } catch (error) { console.log("讀取失敗"); }
     
     document.getElementById('loading').style.display = 'none';
@@ -141,7 +205,6 @@
     renderStats();
   }
 
-  // 計算每個食物的次數與「第一次吃」的日期
   function calculateStats() {
     foodStats = {};
     for (let date in foodRecords) {
@@ -153,11 +216,9 @@
             foodStats[fName] = { count: 0, firstDate: date, allergy: false };
           }
           foodStats[fName].count++;
-          // 找尋最早的日期
           if (new Date(date) < new Date(foodStats[fName].firstDate)) {
             foodStats[fName].firstDate = date;
           }
-          // 如果有任何一次標記過敏，這項食物就是過敏警示
           if (food.allergy) foodStats[fName].allergy = true;
         });
       });
@@ -199,17 +260,16 @@
           if(!seen.has(f.name) && f.name.trim() !== "") { seen.add(f.name); uniqueFoods.push(f.name); }
         }));
         
-        // 【願望2解決】排序優先顯示「第一次接觸」的新食物
         uniqueFoods.sort((a, b) => {
           let aIsNew = foodStats[a].firstDate === dateKey ? 1 : 0;
           let bIsNew = foodStats[b].firstDate === dateKey ? 1 : 0;
-          return bIsNew - aIsNew; // 讓是初次體驗的排前面
+          return bIsNew - aIsNew; 
         });
         
         let foodsToDisplay = uniqueFoods.slice(0, 2); 
         foodsToDisplay.forEach(fName => {
           let isNewFood = foodStats[fName].firstDate === dateKey;
-          let markNew = isNewFood ? ' new-food' : ''; // 新食物加粗橘色樣式
+          let markNew = isNewFood ? ' new-food' : ''; 
           let prefix = isNewFood ? '✨' : '';
           foodTagsHTML += `<div class="food-tag${markNew}">${prefix}${fName}</div>`;
         });
@@ -229,7 +289,7 @@
     renderCalendar();
   }
 
-  // === 編輯當日紀錄邏輯 (願望1解決) ===
+  // === 編輯當日紀錄邏輯 ===
   function selectDate(year, month, day) {
     selectedDate = new Date(year, month, day);
     renderCalendar();
@@ -237,15 +297,12 @@
     let dateKey = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
     document.getElementById('displayDate').innerText = `【 ${dateKey} 】`;
 
-    // 載入當天舊資料進陣列，準備編輯
     currentDayMealsData = [];
     if (foodRecords[dateKey]) {
-      // 深拷貝，以免直接改到全域變數
       currentDayMealsData = JSON.parse(JSON.stringify(foodRecords[dateKey]));
     }
     
     if(currentDayMealsData.length === 0) {
-       // 如果這天沒紀錄，預設給一餐空白的
        currentDayMealsData.push({ time: "12:00", foods: [{ name: "", allergy: false }] });
     }
     renderMealsEditor();
@@ -262,7 +319,6 @@
     return options;
   }
 
-  // 將 currentDayMealsData 畫到畫面上
   function renderMealsEditor() {
     const container = document.getElementById('mealsContainer');
     container.innerHTML = '';
@@ -295,12 +351,11 @@
     });
   }
 
-  // 陣列操作函式 (編輯同步)
   function updateTime(mIdx, val) { currentDayMealsData[mIdx].time = val; }
   function updateFood(mIdx, fIdx, key, val) { currentDayMealsData[mIdx].foods[fIdx][key] = val; }
   function toggleAllergy(mIdx, fIdx) { 
     currentDayMealsData[mIdx].foods[fIdx].allergy = !currentDayMealsData[mIdx].foods[fIdx].allergy; 
-    renderMealsEditor(); // 重新渲染更新⚠️圖示
+    renderMealsEditor(); 
   }
   function addFoodField(mIdx) { 
     currentDayMealsData[mIdx].foods.push({name: "", allergy: false}); 
@@ -319,11 +374,9 @@
     renderMealsEditor(); 
   }
 
-  // === 儲存功能 (送出整天的資料覆蓋) ===
   function submitData() {
     const dateText = document.getElementById('displayDate').innerText.replace('【 ', '').replace(' 】', '');
     
-    // 過濾掉空白的食物欄位
     let cleanMeals = [];
     currentDayMealsData.forEach(meal => {
        let validFoods = meal.foods.filter(f => f.name.trim() !== "");
@@ -331,7 +384,6 @@
     });
 
     if(cleanMeals.length === 0) {
-       // 如果當天清空了，理論上可以送空陣列去清掉表格資料，但這裡防呆先要求至少有一項
        alert("最少要留一項食物紀錄喔！若要清空請直接在 Google 表單刪除該列。"); return;
     }
 
@@ -346,22 +398,19 @@
     .then(data => {
       if(data.status === "success") {
         alert("當日紀錄已更新！子淇媽咪辛苦了 🥰");
-        fetchHistoryData(); // 重新抓資料重算統計
+        fetchHistoryData(); 
       } else { alert("儲存失敗：" + data.message); document.getElementById('loading').style.display='none'; }
     }).catch(err => { alert("錯誤：" + err); document.getElementById('loading').style.display='none'; });
   }
 
-  // === 渲染統計分頁 (願望3解決) ===
   function renderStats() {
     let foodNames = Object.keys(foodStats);
     let totalKinds = foodNames.length;
     
-    // 圓環進度條動畫
     let percent = Math.min((totalKinds / 100) * 100, 100);
     document.getElementById('progressRing').style.background = `conic-gradient(var(--primary-color) ${percent}%, #E0E0E0 0%)`;
     document.getElementById('progressNum').innerText = totalKinds;
 
-    // 依照吃過的次數排序
     foodNames.sort((a, b) => foodStats[b].count - foodStats[a].count);
 
     let listContainer = document.getElementById('statsListContainer');
