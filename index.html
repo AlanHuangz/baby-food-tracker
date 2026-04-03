@@ -58,8 +58,11 @@
 
     /* [指南分頁] */
     .guide-card { background: white; border-radius: 15px; padding: 15px; margin-bottom: 15px; border-left: 5px solid var(--primary-color); box-shadow: 0 4px 6px rgba(0,0,0,0.03);}
-    .guide-card h4 { margin: 0 0 10px 0; color: var(--primary-color); }
-    .guide-card ul { padding-left: 20px; font-size: 0.85rem; line-height: 1.6; color: #555; margin: 0;}
+    .guide-card h4 { margin: 0 0 10px 0; font-size: 1rem; color: var(--primary-color); display: flex; align-items: center; gap: 8px;}
+    .guide-card ul { margin: 0; padding-left: 20px; font-size: 0.85rem; line-height: 1.6; color: #555;}
+    .guide-card li { margin-bottom: 6px; }
+    .stage-box { background: #F8FBF8; border-radius: 8px; padding: 10px; margin-bottom: 8px; font-size: 0.85rem; border: 1px solid #EBF4EE;}
+    .stage-title { font-weight: bold; color: var(--primary-color); margin-bottom: 3px; }
 
     #loading { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(244, 249, 244, 0.9); justify-content: center; align-items: center; font-size: 1.2rem; color: var(--primary-color); font-weight: bold; z-index: 1000; flex-direction: column; }
   </style>
@@ -109,27 +112,51 @@
 </div>
 
 <div id="tab-guide" class="app-container tab-content">
-  <h3 style="text-align:center; color: var(--primary-color);">💡 副食品必備觀念</h3>
+  <h3 style="text-align:center; color: var(--primary-color); margin-bottom: 20px;">💡 森林副食品學堂</h3>
+  
   <div class="guide-card">
-    <h4>🌱 少量多樣化 (黃瑽寧醫師)</h4>
+    <h4>🌱 少量多樣化實戰 (黃瑽寧醫師)</h4>
     <ul>
-      <li><b>不必一種試三天：</b>每天給一點點、很多種不同的天然食材，更能訓練免疫耐受性。</li>
-      <li><b>及早接觸過敏原：</b>雞蛋、花生、海鮮應及早微量嘗試。</li>
-      <li><b>抓兇手：</b>若過敏，先全停，等疹子退了再「一次抓一個」單獨試吃。</li>
+      <li><b>怎麼給：</b>大人吃什麼，寶寶就跟著吃。只要是天然無調味食材，剪碎或讓寶寶「舔一兩口」、「沾一小滴」即可。</li>
+      <li><b>核心目的：</b>重點不是吃飽，而是讓腸胃與免疫系統「認識」各種抗原，一天試 3-5 種新食物也沒關係。</li>
+      <li><b>不要怕過敏：</b>雞蛋、花生、海鮮等高致敏物，反而要<b>及早少量接觸</b>，刻意延後更容易過敏！</li>
     </ul>
   </div>
+
   <div class="guide-card" style="border-left-color: #D48843;">
-    <h4>🥦 手指食物 (Finger Food)</h4>
+    <h4 style="color: #D48843;">❓ 過敏突發狀況怎麼辦？</h4>
     <ul>
-      <li><b>6-8m：</b>給予「粗長條狀」（食指大小），長度要凸出寶寶手掌。</li>
-      <li><b>9-12m：</b>給予「骰子狀」小塊，練習精細抓取。</li>
-      <li><b>安全：</b>硬度要能用拇指食指輕鬆捏扁才合格！</li>
+      <li><b>抓兇手三步驟：</b>一次試很多種，遇到輕微紅疹時，先把當天的新嫌疑犯「全部暫停」。等幾天疹子退了，再把嫌疑犯「一次挑一種」單獨試吃，一吃又長疹子就是兇手！</li>
+      <li><b>還能再吃嗎：</b>寶寶腸胃發育快，現在過敏不代表以後會。抓到兇手先避開 1-2 個月，之後再用極微量重新嘗試，常常就不再過敏了！</li>
     </ul>
   </div>
+
+  <div class="guide-card">
+    <h4>🥦 手指食物與質地進階</h4>
+    <div style="font-size: 0.85rem; color: #D48843; margin-bottom: 8px; font-weight: bold; background: #FFF9F2; padding: 5px; border-radius: 5px;">
+      🌟 安全黃金準則：硬度必須是「大人用大拇指和食指用力捏，能輕易壓扁」的程度。
+    </div>
+    <div class="stage-box">
+      <div class="stage-title">4~6m (吞嚥期)</div>
+      泥糊狀，加上餐桌上的微量探索（沾味道）。
+    </div>
+    <div class="stage-box">
+      <div class="stage-title">6~8m (整把抓階段)</div>
+      寶寶只會用手掌一把抓。請給予<b>「粗長條狀」</b>（如成人食指大小），長度要凸出寶寶手掌才吃得到喔！
+    </div>
+    <div class="stage-box">
+      <div class="stage-title">8~10m (精細捏階段)</div>
+      寶寶開始會用大拇指與食指捏。可切成<b>「骰子狀」</b>小塊，讓寶寶練習精準抓取與咀嚼。
+    </div>
+  </div>
+
   <div class="guide-card" style="border-left-color: var(--danger-color);">
-    <h4 style="color:var(--danger-color);">❌ 一歲前絕對禁止</h4>
+    <h4 style="color: var(--danger-color);">❌ 一歲前絕對 NG 清單</h4>
     <ul>
-      <li>蜂蜜（肉毒桿菌中毒風險）、鹽巴、糖、整顆堅果與葡萄、鮮奶主食。</li>
+      <li><b>蜂蜜：</b>極危險，恐導致肉毒桿菌中毒。</li>
+      <li><b>鹽巴糖調味料：</b>保護腎臟發育，天然原味最好。</li>
+      <li><b>圓形硬物：</b>整顆葡萄、堅果、熱狗、湯圓（易窒息危險）。</li>
+      <li><b>果汁與鮮奶：</b>果汁太甜欠缺纖維；鮮奶蛋白質過高不宜當主食（但可少量入菜）。</li>
     </ul>
   </div>
 </div>
@@ -145,7 +172,7 @@
   const GAS_URL = "https://script.google.com/macros/s/AKfycbwYMNAkHPIV4WpdxoHngCHnUFSO3l8wDM_eFplbKGFzABKW74lMSqeKCLW16a80_Fgo/exec"; 
 
   const MASTER_FOOD_LIST = {
-    "澱粉類": ["十倍粥", "燕麥", "地瓜", "馬鈴薯", "南瓜", "山藥", "糙米", "紫米", "小米", "藜麥", "紅豆", "綠豆", "薏仁", "土司", "麵條", "通心粉", "冬粉", "麵線", "蓮藕", "菱角", "栗子", "玉米"],
+    "澱粉類": ["十倍粥", "燕麥", "地瓜", "馬 কুল薯", "南瓜", "山藥", "糙米", "紫米", "小米", "藜麥", "紅豆", "綠豆", "薏仁", "土司", "麵條", "通心粉", "冬粉", "麵線", "蓮藕", "菱角", "栗子", "玉米"],
     "蔬菜類": ["高麗菜", "青江菜", "小白菜", "菠菜", "地瓜葉", "空心菜", "莧菜", "大白菜", "油菜", "紅蘿蔔", "白蘿蔔", "青花菜", "白花菜", "洋蔥", "甜椒", "番茄", "茄子", "絲瓜", "冬瓜", "大黃瓜", "小黃瓜", "苦瓜", "秋葵", "四季豆", "豌豆", "毛豆", "蘆筍", "玉米筍", "甜菜根", "木耳", "香菇", "金針菇", "杏鮑菇", "蘑菇"],
     "蛋白質": ["雞蛋黃", "全蛋", "雞胸肉", "雞腿肉", "豬肉", "牛肉", "鱈魚", "鮭魚", "鯛魚", "鱸魚", "吻仔魚", "魩仔魚", "蝦子", "蛤蜊", "干貝", "豆腐", "豆干", "豆包", "豆漿", "毛豆", "雞肝", "豬肝"],
     "水果類": ["蘋果", "香蕉", "梨子", "木瓜", "酪梨", "葡萄", "藍莓", "草莓", "奇異果", "芒果", "火龍果", "西瓜", "哈密瓜", "蓮霧", "芭樂", "柑橘", "柳丁", "櫻桃", "鳳梨", "水蜜桃", "棗子", "柿子", "枇杷", "覆盆子"],
