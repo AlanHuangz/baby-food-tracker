@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>寶寶副食品日記 🥣</title>
+  <title>木岑的副食品日記 🌲</title>
   <style>
     :root {
-      --bg-color: #FFF9F2;
-      --primary-color: #FFB6B9;
-      --secondary-color: #FAE3D9;
-      --text-color: #6D6875;
-      --btn-hover: #FF9A9E;
+      --bg-color: #F4F9F4;      /* 森林淺綠底色 */
+      --primary-color: #5C8D89; /* 森林深綠 */
+      --secondary-color: #A7D7C5; /* 嫩葉綠 */
+      --text-color: #4A4A4A;    /* 樹幹灰棕色 */
+      --btn-hover: #45706D;
+      --wood-border: #D5C2A5;   /* 木質邊框色 */
     }
     body {
       font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -27,28 +28,28 @@
       max-width: 400px;
       background: white;
       border-radius: 25px;
-      box-shadow: 0 10px 20px rgba(255, 182, 185, 0.15);
+      box-shadow: 0 10px 20px rgba(92, 141, 137, 0.15);
       padding: 20px;
       box-sizing: border-box;
     }
     
-    /* 月曆樣式調整為可以塞入食物文字 */
+    /* 月曆區塊 (森林風) */
     .cute-calendar {
       background-color: white;
       border-radius: 20px;
       padding: 15px;
       margin-bottom: 20px;
-      box-shadow: 0 5px 15px rgba(255, 182, 185, 0.2);
+      box-shadow: 0 5px 15px rgba(92, 141, 137, 0.1);
       border: 2px solid var(--secondary-color);
     }
     .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-    .cal-title { font-weight: bold; color: #B5838D; font-size: 1.1rem; }
+    .cal-title { font-weight: bold; color: var(--primary-color); font-size: 1.1rem; }
     .cal-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; transition: transform 0.2s; }
-    .cal-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 0.8rem; color: var(--primary-color); font-weight: bold; margin-bottom: 5px; }
+    .cal-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 0.8rem; color: #7B9D96; font-weight: bold; margin-bottom: 5px; }
     .cal-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
     
     .cal-day { 
-      min-height: 55px; /* 加高格子讓文字進得去 */
+      min-height: 55px; 
       display: flex; 
       flex-direction: column;
       justify-content: flex-start; 
@@ -63,14 +64,15 @@
       transition: all 0.2s;
     }
     .cal-day:hover { background-color: var(--bg-color); }
-    .cal-day.selected { background-color: var(--primary-color); color: white; font-weight: bold; box-shadow: 0 3px 8px rgba(255, 182, 185, 0.5); }
+    .cal-day.selected { background-color: var(--primary-color); color: white; font-weight: bold; box-shadow: 0 3px 8px rgba(92, 141, 137, 0.4); }
     .cal-day.today { border: 2px dashed var(--primary-color); }
     
-    /* 食物迷你小標籤 */
+    /* 食物迷你小標籤 (葉子色) */
     .food-tag {
       font-size: 0.55rem;
-      background-color: #FFF0F0;
-      color: #D9534F;
+      background-color: #EBF4EE;
+      color: #386662;
+      border: 1px solid var(--secondary-color);
       border-radius: 4px;
       padding: 2px;
       margin-top: 2px;
@@ -80,42 +82,46 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .selected .food-tag {
-      background-color: white;
-      color: var(--primary-color);
-    }
+    .selected .food-tag { background-color: white; color: var(--primary-color); border: none;}
 
     /* 表單區塊 */
-    .record-section h3 { margin-top: 0; color: var(--primary-color); text-align: center; }
-    .date-display { text-align: center; font-size: 1.2rem; margin-bottom: 15px; font-weight: bold; }
-    .meal-block { background: #FFF0F0; border-radius: 15px; padding: 15px; margin-bottom: 15px; border: 1px dashed var(--primary-color); }
-    .input-group { margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-    select, input { border: 1px solid #FAD4D4; border-radius: 10px; padding: 8px; color: var(--text-color); outline: none; flex-grow: 1; }
+    .record-section h3 { margin-top: 0; color: var(--primary-color); text-align: center; display: flex; align-items: center; justify-content: center; gap: 10px;}
+    .date-display { text-align: center; font-size: 1.2rem; margin-bottom: 15px; font-weight: bold; color: #5C4B43; }
     
-    .btn { background-color: var(--primary-color); color: white; border: none; border-radius: 12px; padding: 10px 15px; font-weight: bold; }
-    .btn-small { background-color: var(--secondary-color); color: var(--text-color); padding: 5px 10px; font-size: 0.8rem; border: none; border-radius: 8px;}
-    .btn-delete { background-color: #FFE3E3; color: #D9534F; border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 0.8rem; cursor: pointer; display: flex; justify-content: center; align-items: center; flex-shrink: 0;}
+    /* 歷史紀錄區塊 */
+    .saved-meals-container { margin-bottom: 15px; }
+    .saved-meal-block { background: #F8FBF8; border-left: 4px solid var(--primary-color); border-radius: 8px; padding: 12px; margin-bottom: 10px; font-size: 0.95rem; box-shadow: 0 2px 5px rgba(0,0,0,0.03);}
+    .saved-meal-time { font-weight: bold; color: var(--primary-color); margin-bottom: 5px; }
+    
+    .meal-block { background: #FCFCFA; border-radius: 15px; padding: 15px; margin-bottom: 15px; border: 1px dashed var(--wood-border); }
+    .input-group { margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    select, input { border: 1px solid var(--wood-border); border-radius: 10px; padding: 8px; color: var(--text-color); outline: none; flex-grow: 1; background-color: white;}
+    select:focus, input:focus { border-color: var(--primary-color); }
+    
+    .btn { background-color: var(--primary-color); color: white; border: none; border-radius: 12px; padding: 10px 15px; font-weight: bold; cursor: pointer;}
+    .btn-small { background-color: var(--secondary-color); color: #2C4A47; padding: 5px 10px; font-size: 0.8rem; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;}
+    .btn-delete { background-color: #FCEBEB; color: #D9534F; border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 0.8rem; cursor: pointer; display: flex; justify-content: center; align-items: center; flex-shrink: 0;}
     .btn-add-meal { width: 100%; background-color: transparent; border: 2px solid var(--primary-color); color: var(--primary-color); margin-bottom: 20px; }
     .btn-submit { width: 100%; font-size: 1.1rem; padding: 12px; }
     
     /* 載入中遮罩 */
-    #loading { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.85); justify-content: center; align-items: center; font-size: 1.2rem; color: var(--primary-color); font-weight: bold; z-index: 1000; flex-direction: column; }
+    #loading { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(244, 249, 244, 0.9); justify-content: center; align-items: center; font-size: 1.2rem; color: var(--primary-color); font-weight: bold; z-index: 1000; flex-direction: column; }
     .loading-subtext { font-size: 0.8rem; color: var(--text-color); margin-top: 10px; font-weight: normal; }
   </style>
 </head>
 <body>
 
 <div id="loading">
-  <span id="loadingText">載入副食品記憶中... 🍼</span>
-  <span class="loading-subtext">讓子淇媽咪每天都有好心情</span>
+  <span id="loadingText">🌲 森林信使讀取中...</span>
+  <span class="loading-subtext">正在回想木岑吃了什麼</span>
 </div>
 
 <div class="app-container">
   <div class="cute-calendar">
     <div class="cal-header">
-      <button class="cal-btn" onclick="changeMonth(-1)">🌸</button>
+      <button class="cal-btn" onclick="changeMonth(-1)">🌿</button>
       <div class="cal-title" id="monthYear"></div>
-      <button class="cal-btn" onclick="changeMonth(1)">🌸</button>
+      <button class="cal-btn" onclick="changeMonth(1)">🌿</button>
     </div>
     <div class="cal-weekdays">
       <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
@@ -124,35 +130,41 @@
   </div>
 
   <div class="record-section">
-    <h3>📝 妹妹的副食品紀錄</h3>
+    <h3>🪵 木岑的副食品紀錄 🌲</h3>
     <div class="date-display" id="displayDate"></div>
+    
+    <div class="saved-meals-container" id="savedMealsContainer"></div>
+    
     <div id="mealsContainer"></div>
-    <button class="btn btn-add-meal" onclick="addMeal()">+ 新增一餐</button>
-    <button class="btn btn-submit" onclick="submitData()">儲存紀錄 💖</button>
+    
+    <button class="btn btn-add-meal" onclick="addMeal()">+ 新增下一餐</button>
+    <button class="btn btn-submit" onclick="submitData()">儲存新紀錄 🌿</button>
   </div>
 </div>
 
 <script>
-  // GAS 網址已套用
+  // 阿倫你的 GAS 網址已自動綁定！
   const GAS_URL = "https://script.google.com/macros/s/AKfycbwYMNAkHPIV4WpdxoHngCHnUFSO3l8wDM_eFplbKGFzABKW74lMSqeKCLW16a80_Fgo/exec"; 
 
   let currentDate = new Date();
   let selectedDate = new Date();
   let mealCount = 0;
-  let foodRecords = {}; // 用來存放從雲端抓下來的每日食物紀錄
+  let foodRecords = {}; 
 
-  // 網頁載入時，先去雲端抓取舊紀錄
+  // 抓取雲端紀錄 (加上時間戳記避免手機快取作祟)
   async function fetchHistoryData() {
     try {
-      const response = await fetch(GAS_URL);
+      const response = await fetch(GAS_URL + "?timestamp=" + new Date().getTime());
       const data = await response.json();
       foodRecords = data;
     } catch (error) {
-      console.log("讀取紀錄失敗，可能尚未有紀錄或網路問題");
+      console.log("讀取失敗", error);
     }
-    // 關閉載入畫面，渲染月曆
     document.getElementById('loading').style.display = 'none';
     renderCalendar();
+    
+    // 重新選取目前點擊的日期，更新下方畫面
+    selectDate(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
   }
 
   function renderCalendar() {
@@ -170,17 +182,20 @@
       let isToday = (i === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear()) ? 'today' : '';
       let isSelected = (i === selectedDate.getDate() && month === selectedDate.getMonth() && year === selectedDate.getFullYear()) ? 'selected' : '';
       
-      // 組合出 YYYY-MM-DD 的日期格式，用來去 foodRecords 裡面找紀錄
       let dateKey = `${year}-${(month + 1).toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}`;
       let foodTagsHTML = '';
       
       if (foodRecords[dateKey]) {
-        // 如果當天有紀錄，最多顯示兩個食物標籤避免版面爆掉
-        let foodsToDisplay = foodRecords[dateKey].slice(0, 2); 
+        // 抓出當天所有食物並過濾重複項目
+        let allFoodsForDay = [];
+        foodRecords[dateKey].forEach(meal => { allFoodsForDay = allFoodsForDay.concat(meal.foods); });
+        let uniqueFoods = [...new Set(allFoodsForDay)];
+        
+        let foodsToDisplay = uniqueFoods.slice(0, 2); 
         foodsToDisplay.forEach(food => {
           foodTagsHTML += `<div class="food-tag">${food}</div>`;
         });
-        if (foodRecords[dateKey].length > 2) {
+        if (uniqueFoods.length > 2) {
            foodTagsHTML += `<div class="food-tag">...</div>`;
         }
       }
@@ -198,10 +213,35 @@
     renderCalendar();
   }
 
+  // 點擊日期時觸發
   function selectDate(year, month, day) {
     selectedDate = new Date(year, month, day);
     renderCalendar();
-    document.getElementById('displayDate').innerText = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    
+    let dateKey = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    document.getElementById('displayDate').innerText = `【 ${dateKey} 】`;
+
+    // 處理當日已存紀錄
+    const savedContainer = document.getElementById('savedMealsContainer');
+    savedContainer.innerHTML = '';
+    
+    if (foodRecords[dateKey] && foodRecords[dateKey].length > 0) {
+      savedContainer.innerHTML = `<div style="color:var(--primary-color); font-weight:bold; margin-bottom:8px; font-size:0.9rem;">🌳 今日已有紀錄：</div>`;
+      foodRecords[dateKey].forEach(meal => {
+        let foodList = meal.foods.join("、");
+        savedContainer.innerHTML += `
+          <div class="saved-meal-block">
+            <div class="saved-meal-time">🕒 ${meal.time}</div>
+            <div>🥣 ${foodList}</div>
+          </div>
+        `;
+      });
+    }
+
+    // 清空新增表單，給一個新的空白餐點
+    document.getElementById('mealsContainer').innerHTML = '';
+    mealCount = 0;
+    addMeal();
   }
 
   function generateTimeOptions() {
@@ -226,17 +266,17 @@
       <div class="foods-container" id="foods-meal-${mealCount}">
         <div class="input-group">
           <label>食物 1：</label>
-          <input type="text" placeholder="例如：十倍粥..." class="food-input">
+          <input type="text" placeholder="例如：地瓜泥、十倍粥..." class="food-input">
         </div>
       </div>
-      <button class="btn-small" onclick="addFood(${mealCount})">+ 新增食物</button>
+      <button class="btn-small" onclick="addFood(${mealCount})">+ 加碼食物</button>
     `;
     document.getElementById('mealsContainer').appendChild(mealDiv);
   }
 
   function addFood(mealId) {
     const foodsContainer = document.getElementById(`foods-meal-${mealId}`);
-    const uniqueId = Date.now(); // 產生不重複的ID給這行食物
+    const uniqueId = Date.now(); 
     const currentCount = foodsContainer.children.length + 1;
     
     const foodDiv = document.createElement('div');
@@ -250,45 +290,41 @@
     foodsContainer.appendChild(foodDiv);
   }
 
-  // 刪除手殘新增的食物列
   function removeFoodRow(rowId) {
     const row = document.getElementById(rowId);
     if (row) { row.remove(); }
   }
 
   function submitData() {
-    const date = document.getElementById('displayDate').innerText;
+    // 這裡我們把日期格式轉回純文字 YYYY-MM-DD
+    const dateText = document.getElementById('displayDate').innerText.replace('【 ', '').replace(' 】', '');
     const meals = [];
-    document.querySelectorAll('.meal-block').forEach(meal => {
+    
+    // 只抓取「新增欄位」裡的資料
+    document.querySelectorAll('#mealsContainer .meal-block').forEach(meal => {
       const time = meal.querySelector('.time-select').value;
       const foods = Array.from(meal.querySelectorAll('.food-input')).map(i => i.value).filter(v => v.trim() !== "");
       if(foods.length > 0) meals.push({ time, foods });
     });
 
     if(meals.length === 0) {
-      alert("媽咪，請至少輸入一項食物喔！"); return;
+      alert("請至少輸入一項新的食物喔！"); return;
     }
 
-    document.getElementById('loadingText').innerText = "為妹妹儲存紀錄中... ⏳";
+    document.getElementById('loadingText').innerText = "🌿 紀錄存入森林中...";
     document.getElementById('loading').style.display = 'flex';
 
     fetch(GAS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ date, meals })
+      body: JSON.stringify({ date: dateText, meals: meals })
     })
     .then(response => response.json())
     .then(data => {
       if(data.status === "success") {
         alert("紀錄已儲存！子淇媽咪辛苦了 🥰");
-        // 儲存成功後，重新抓取一次資料，讓月曆即時顯示剛剛存的食物
-        document.getElementById('loadingText').innerText = "更新月曆中... 📅";
-        fetchHistoryData(); 
-        
-        // 清空表單
-        document.getElementById('mealsContainer').innerHTML = '';
-        mealCount = 0;
-        addMeal();
+        document.getElementById('loadingText').innerText = "更新月曆中... 🌲";
+        fetchHistoryData(); // 重新抓取資料
       } else {
         document.getElementById('loading').style.display = 'none';
         alert("儲存失敗：" + data.message);
@@ -301,10 +337,6 @@
   }
 
   window.onload = () => {
-    // 設定今天的日期
-    selectDate(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-    addMeal();
-    // 開始抓取歷史紀錄 (此時會顯示載入中遮罩)
     fetchHistoryData();
   };
 </script>
