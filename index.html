@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>寶寶副食品日記 🥣</title>
+  <style>
+    :root {
+      --bg-color: #FFF9F2;
+      --primary-color: #FFB6B9;
+      --secondary-color: #FAE3D9;
+      --text-color: #6D6875;
+      --btn-hover: #FF9A9E;
+    }
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .app-container {
+      width: 100%;
+      max-width: 400px;
+      background: white;
+      border-radius: 25px;
+      box-shadow: 0 10px 20px rgba(255, 182, 185, 0.15);
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    /* 月曆樣式 */
+    .cute-calendar {
+      background-color: white;
+      border-radius: 20px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(255, 182, 185, 0.2);
+      border: 2px solid var(--secondary-color);
+    }
+    .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .cal-title { font-weight: bold; color: #B5838D; font-size: 1.1rem; }
+    .cal-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; transition: transform 0.2s; }
+    .cal-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 0.8rem; color: var(--primary-color); font-weight: bold; margin-bottom: 5px; }
+    .cal-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+    .cal-day { aspect-ratio: 1 / 1; display: flex; justify-content: center; align-items: center; border-radius: 50%; font-size: 0.9rem; cursor: pointer; position: relative; color: var(--text-color); }
+    .cal-day.selected { background-color: var(--primary-color); color: white; font-weight: bold; box-shadow: 0 3px 8px rgba(255, 182, 185, 0.5); }
+    .cal-day.today { border: 2px dashed var(--primary-color); }
+    .record-mark { position: absolute; bottom: -2px; right: -2px; font-size: 0.7rem; }
+    
+    /* 表單區塊 */
+    .record-section h3 { margin-top: 0; color: var(--primary-color); text-align: center; }
+    .date-display { text-align: center; font-size: 1.2rem; margin-bottom: 15px; font-weight: bold; }
+    .meal-block { background: #FFF0F0; border-radius: 15px; padding: 15px; margin-bottom: 15px; border: 1px dashed var(--primary-color); }
+    .input-group { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+    select, input { border: 1px solid #FAD4D4; border-radius: 10px; padding: 8px; color: var(--text-color); outline: none; flex-grow: 1; }
+    .btn { background-color: var(--primary-color); color: white; border: none; border-radius: 12px; padding: 10px 15px; font-weight: bold; }
+    .btn-small { background-color: var(--secondary-color); color: var(--text-color); padding: 5px 10px; font-size: 0.8rem; }
+    .btn-add-meal { width: 100%; background-color: transparent; border: 2px solid var(--primary-color); color: var(--primary-color); margin-bottom: 20px; }
+    .btn-submit { width: 100%; font-size: 1.1rem; padding: 12px; }
+    
+    /* 載入中遮罩 */
+    #loading { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); justify-content: center; align-items: center; font-size: 1.5rem; color: var(--primary-color); font-weight: bold; z-index: 1000; }
+  </style>
+</head>
+<body>
+
+<div id="loading">儲存中，請稍候... ⏳</div>
+
+<div class="app-container">
+  <div class="cute-calendar">
+    <div class="cal-header">
+      <button class="cal-btn" onclick="changeMonth(-1)">🌸</button>
+      <div class="cal-title" id="monthYear"></div>
+      <button class="cal-btn" onclick="changeMonth(1)">🌸</button>
+    </div>
+    <div class="cal-weekdays">
+      <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+    </div>
+    <div class="cal-days" id="calDays"></div>
+  </div>
+
+  <div class="record-section">
+    <h3>📝 副食品紀錄</h3>
+    <div class="date-display" id="displayDate"></div>
+    <div id="mealsContainer"></div>
+    <button class="btn btn-add-meal" onclick="addMeal()">+ 新增一餐</button>
+    <button class="btn btn-submit" onclick="submitData()">儲存紀錄 💖</button>
+  </div>
+</div>
+
+<script>
+  // ==========================================
+  // 1. 在這裡貼上你的 GAS 網頁應用程式網址
+  // ==========================================
+  const GAS_URL = "YOUR_GAS_WEB_APP_URL"; 
+
+  let currentDate = new Date();
+  let selectedDate = new Date();
+  let mealCount = 0;
+
+  function renderCalendar() {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    document.getElementById('monthYear').innerText = `${year}年 ${month + 1}月`;
+    const firstDayIndex = new Date(year, month, 1).getDay();
+    const lastDay = new Date(year, month + 1, 0).getDate();
+    const calDays = document.getElementById('calDays');
+    calDays.innerHTML = '';
+    
+    for (let i = 0; i < firstDayIndex; i++) { calDays.innerHTML += `<div></div>`; }
+    
+    for (let i = 1; i <= lastDay; i++) {
+      let isToday = (i === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear()) ? 'today' : '';
+      let isSelected = (i === selectedDate.getDate() && month === selectedDate.getMonth() && year === selectedDate.getFullYear()) ? 'selected' : '';
+      
+      const dayDiv = document.createElement('div');
+      dayDiv.className = `cal-day ${isToday} ${isSelected}`;
+      dayDiv.innerHTML = `${i}`;
+      dayDiv.onclick = () => selectDate(year, month, i);
+      calDays.appendChild(dayDiv);
+    }
+  }
+
+  function changeMonth(step) {
+    currentDate.setMonth(currentDate.getMonth() + step);
+    renderCalendar();
+  }
+
+  function selectDate(year, month, day) {
+    selectedDate = new Date(year, month, day);
+    renderCalendar();
+    document.getElementById('displayDate').innerText = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+  }
+
+  function generateTimeOptions() {
+    let options = '';
+    for (let h = 8; h <= 21; h++) {
+      let hour = h.toString().padStart(2, '0');
+      options += `<option value="${hour}:00">${hour}:00</option><option value="${hour}:30">${hour}:30</option>`;
+    }
+    return options;
+  }
+
+  function addMeal() {
+    mealCount++;
+    const mealDiv = document.createElement('div');
+    mealDiv.className = 'meal-block';
+    mealDiv.id = `meal-${mealCount}`;
+    mealDiv.innerHTML = `
+      <div class="input-group">
+        <label>時間：</label>
+        <select class="time-select">${generateTimeOptions()}</select>
+      </div>
+      <div class="foods-container" id="foods-meal-${mealCount}">
+        <div class="input-group">
+          <label>食物 1：</label>
+          <input type="text" placeholder="例如：十倍粥..." class="food-input">
+        </div>
+      </div>
+      <button class="btn btn-small" onclick="addFood(${mealCount})">+ 新增食物</button>
+    `;
+    document.getElementById('mealsContainer').appendChild(mealDiv);
+  }
+
+  function addFood(mealId) {
+    const foodsContainer = document.getElementById(`foods-meal-${mealId}`);
+    const foodDiv = document.createElement('div');
+    foodDiv.className = 'input-group';
+    foodDiv.innerHTML = `<label>食物 ${foodsContainer.children.length + 1}：</label><input type="text" placeholder="其他食物..." class="food-input">`;
+    foodsContainer.appendChild(foodDiv);
+  }
+
+  function submitData() {
+    if(GAS_URL === https://script.google.com/macros/s/AKfycbwYMNAkHPIV4WpdxoHngCHnUFSO3l8wDM_eFplbKGFzABKW74lMSqeKCLW16a80_Fgo/exec) {
+      alert("請先在程式碼中填入 GAS API 網址！");
+      return;
+    }
+
+    const date = document.getElementById('displayDate').innerText;
+    const meals = [];
+    document.querySelectorAll('.meal-block').forEach(meal => {
+      const time = meal.querySelector('.time-select').value;
+      const foods = Array.from(meal.querySelectorAll('.food-input')).map(i => i.value).filter(v => v.trim() !== "");
+      if(foods.length > 0) meals.push({ time, foods });
+    });
+
+    if(meals.length === 0) {
+      alert("請至少輸入一項食物喔！"); return;
+    }
+
+    document.getElementById('loading').style.display = 'flex';
+
+    // 傳送資料到 GAS
+    fetch(GAS_URL, {
+      method: 'POST',
+      // 設定 text/plain 避免 CORS 跨域阻擋問題
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ date, meals })
+    })
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('loading').style.display = 'none';
+      if(data.status === "success") {
+        alert("紀錄已儲存！子淇辛苦了 🥰");
+        // 清空表單，準備下一次紀錄
+        document.getElementById('mealsContainer').innerHTML = '';
+        mealCount = 0;
+        addMeal();
+      } else {
+        alert("儲存失敗：" + data.message);
+      }
+    })
+    .catch(error => {
+      document.getElementById('loading').style.display = 'none';
+      alert("發生錯誤：" + error);
+    });
+  }
+
+  window.onload = () => {
+    selectDate(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+    addMeal();
+  };
+</script>
+</body>
+</html>
